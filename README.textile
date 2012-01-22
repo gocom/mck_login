@@ -60,4 +60,4 @@ p. Installing the plugin is easy, especially if you are already usign "plugin ca
 p. You may also want to grab a localization file, a textpack.
 
 # "Grab a localization file from textpacks directory":https://github.com/gocom/mck_login/tree/master/textpacks. There are few languages available.
-# Copy and paste the files contents to your site's Language paneö (TXP/Admin/Preferences > Language). At the bottom of the langauge panel you should see a _Install Textpack_ field.
+# Copy and paste the files contents to your site's Language panel (TXP/Admin/Preferences > Language). At the bottom of the page you should see a _Install Textpack_ field.
