@@ -6,8 +6,6 @@
  * @package mck_login
  * @author Casalegno Marco <http://www.kreatore.it/>
  * @author Jukka Svahn <http://rahforum.biz>
- * @date 2012
- * @version 0.1
  * @license GNU GPLv2
  * @link http://www.kreatore.it/txp/mck_login
  * @link https://github.com/gocom/mck_login
@@ -21,6 +19,10 @@
 	else {
 		register_callback(array('mck_login', 'handler'), 'textpattern');
 	}
+
+/**
+ * Handles form validation and saving, all of the non-tag stuff
+ */
 
 class mck_login {
 
@@ -38,10 +40,13 @@ class mck_login {
 	}
 	
 	/**
-	 * Add and get a form validation errors
-	 * @param string $message
-	 * @param string $type
+	 * Add and get form validation errors
+	 * @param string $message Either l10n string, or single line of text
+	 * @param string $type For which form the error is for.
 	 * @return array
+	 * <code>
+	 *		mck_login::error('abc_l10n_string');
+	 * </code>
 	 */
 	
 	static public function error($message=NULL, $type=NULL) {
