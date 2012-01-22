@@ -51,7 +51,7 @@ p. See "/extending/abc_trap":https://github.com/gocom/mck_login/blob/master/exte
 
 h2. Installing mck_login
 
-p. Installing the plugin is easy, especially if you are already usign "plugin cache directory":http://textpattern.net/wiki/index.php?title=Advanced_Preferences#Plugin_cache_directory_path. If you haven't, set it up (create a directory, set the path in your site Preferences). 
+p. Installing the plugin is easy, especially if you are already using "plugin cache directory":http://textpattern.net/wiki/index.php?title=Advanced_Preferences#Plugin_cache_directory_path. If you haven't, set it up (create a directory, set the path in your site Preferences). 
 
 # Grab a copy of "mck_login.php":https://github.com/gocom/mck_login/blob/master/mck_login.php.
 # Copy and save it to your plugin cache directory (as @mck_login_v0.1.php@).
