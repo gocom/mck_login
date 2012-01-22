@@ -1,0 +1,23 @@
+#@public
+#Default language, en-us, en-gb
+mck_login_name_and_pass_required => Name and password are required.
+mck_login_form_expired => Form expired. Please try sending the form again by clicking the submit button.
+mck_login_invalid_token => Request denied because of invalid token. Please try sending the form again.
+mck_login_invalid_login => Login and password combination is incorrect.
+mck_login_ip_blacklisted => Request denied. Your IP address was found on anti-spam blacklist database.
+mck_login_you_have_been_banned => Request denied. Your IP address have been banned.
+mck_login_all_fields_required => All fields are required.
+mck_login_email_too_long => Your email address is too long. We only accept addresses with 100 characters or less.
+mck_login_password_too_short => Password needs to be at least 6 characters long.
+mck_login_username_too_short => Username can not be less than 3 characters.
+mck_login_username_too_long => Username can not be more than 64 characters.
+mck_login_realname_too_long => Your name can not be more than 100 characters.
+mck_login_invalid_email => Email address is invalid. Please specify a different address.
+mck_login_email_in_use => Email is used by existing account. An address can be used only by one account. Please specify a different address.
+mck_login_username_taken => Username is already taken.
+mck_login_saving_failed => Saving request to database failed. Please try again.
+mck_login_old_password_incorrect => Old password is incorrect.
+mck_login_passwords_do_not_match => New password and confirmation do not match.
+mck_login_invalid_csrf_token => Access denied. For the security of the empire and invalid tokens.
+mck_login_your_new_password => [{sitename}] Your new password
+mck_login_redirect_message => If the page doesn't redirect, open the following page: {url}

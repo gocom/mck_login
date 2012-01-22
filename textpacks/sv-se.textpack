@@ -1,0 +1,23 @@
+#@public
+#@language sv-se
+mck_login_name_and_pass_required => Kontonamn och lösenord krävs.
+mck_login_form_expired => Formulär har gått ut.
+mck_login_invalid_token => Oops! Ogiltig åtkomsttoken.
+mck_login_invalid_login => Inloggningen misslyckades. Kontonamn och lösenord kombination är felaktigt.
+mck_login_ip_blacklisted => Din IP har svartlistats.
+mck_login_you_have_been_banned => Du har blivit förbjuden.
+mck_login_all_fields_required => Alla fält är obligatoriska.
+mck_login_email_too_long => Din e-postadress är för lång. Vi tar endast emot adresser med 100 tecken eller mindre.
+mck_login_password_too_short => Lösenord måste vara stum 6 tecken långt.
+mck_login_username_too_short => Kontonamn måste vara stum 3 tecken långt.
+mck_login_username_too_long => Kontonamn kan inte vara mer än 64 tecken.
+mck_login_realname_too_long => Ditt namn kan inte vara mer än 100 tecken.
+mck_login_invalid_email => Ogiltig e-postadress.
+mck_login_email_in_use => E-postadressen är tagen av ett annat konto.
+mck_login_username_taken => Kontonamn är reserverat.
+mck_login_saving_failed => Spara misslyckades.
+mck_login_old_password_incorrect => Det gamla lösenordet är felaktigt.
+mck_login_passwords_do_not_match => Lösenorden matchar inte.
+mck_login_invalid_csrf_token => Nekat tillträde.
+mck_login_your_new_password => [{sitename}] Ditt nya lösenord
+mck_login_redirect_message => {url}

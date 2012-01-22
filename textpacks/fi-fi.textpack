@@ -1,0 +1,23 @@
+#@public
+#@language fi-fi
+mck_login_name_and_pass_required => Käyttäjätunnus ja salasana vaaditaan.
+mck_login_form_expired => Lomake vanhentunut. Ole hyvä ja yritä lähettää lomake uudestaan.
+mck_login_invalid_token => Pyyntö estetty virheellisen avaimen takia. Yritä lähettää lomake uudestaan.
+mck_login_invalid_login => Käyttäjätunnus ja salasana yhdistelmä on virheellinen.
+mck_login_ip_blacklisted => Pyyntö estetty. IP-osoitteesi löytyi roskapostilistalta.
+mck_login_you_have_been_banned => Pyyntö estetty. IP-osoitteesi on kieltolistalla.
+mck_login_all_fields_required => Kaikki kentät vaaditaan.
+mck_login_email_too_long => Sähköpostiosoitteesi on liian pitkä. Osoite saa olla maksimissaan 100 merkkiä pitkä.
+mck_login_password_too_short => Salasanan tulee olla vähintään 6 merkkiä pitkä.
+mck_login_username_too_short => Käyttäjätunnuksen tulee olla vähintään 3 merkkiä pitkä.
+mck_login_username_too_long => Käyttäjätunnus saa olla maksimissaan 64 merkkiä pitkä.
+mck_login_realname_too_long => Nimesi saa olla maksimissaan 100 merkkiä pitkä.
+mck_login_invalid_email => Sähköpostiosoite on virheellinen. Ole hyvä ja valitse toinen osoite.
+mck_login_email_in_use => Sähköposti osoite on jo käytössä. Yhtä osoitetta voi käyttää vain yksi käyttäjä.
+mck_login_username_taken => Käyttäjätunnus on varattu.
+mck_login_saving_failed => Tietojen tallettaminen epäonnistui. Ole hyvä ja yritä uudestaan.
+mck_login_old_password_incorrect => Vanha salasana on väärin.
+mck_login_passwords_do_not_match => Uusi salasana ja salasanan varmistus eivät täsmää.
+mck_login_invalid_csrf_token => Pääsy estetty.
+mck_login_your_new_password => [{sitename}] Uusi salasanasi
+mck_login_redirect_message => Jos sivu ei uudelleenohjaudu, avaa seuraava sivu: {url}
