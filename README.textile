@@ -1,10 +1,32 @@
 h1. mck_login
 
-p. Handles site-wide logins, sessions, password recovery and self-registering.
+p. A public-side plugin for "Textpattern CMS":http://textpattern.com. Handles site-wide logins, sessions, password recovery and self-registering. Made by "Jukka Svahn":http://twitter.com/gocom and "Casalegno Marco":http://www.kreatore.it/.
 
-h2. Callbacks
+p. This repo branches from "Casalegno Marco's":http://www.kreatore.it/ Textpattern plugin, "mck_login":http://forum.textpattern.com/viewtopic.php?id=37380. While this mck_login "fork" doesn't really share any code with the original code base, it is based on it, initially started as a simple patch.
 
-p. The plugin comes with range of callback events, hooking point which 3rd party plugins and software can use to integrate with mck_login inner-workings.
+p. The main idea [of mine] was to fix security issues the original release of mck_login had. Work started by removing the all of the code which was duplicated from Textpattern's core, and then fixing all the simple, yet critical, security issues.
+
+p. After patching everything and taking advantage of core features, I concentrated to adding number of new features. The content and layout which once was hard-coded to the plugin, became changeable with tags and localization strings. No longer a form was a single tag, but set of tag. After that came security enchantments; brute force prevention, form tokens to prevent CSRF attacks, nonces and time-limited, eventually expiring forms. And finally, tools for extending the plugins in form of callbacks events and hooks.
+
+h2. List of tags
+
+p. As the work progressed, mck_login's tag weaponry doubled.
+
+* @<txp:mck_login />@
+* @<txp:mck_login_if>@
+* @<txp:mck_login_form />@
+* @<txp:mck_register_form />@
+* @<txp:mck_password_form />@
+* @<txp:mck_reset_form />@
+* @<txp:mck_login_bouncer />@
+* @<txp:mck_login_token />@
+* @<txp:mck_login_errors />@
+
+p. Please see "./examples/":https://github.com/gocom/mck_login/tree/master/examples directory for usage instructions and examples. The plugin's source includes documentation (PHPdoc) and outlines all tag attributes and has embedded minimal inline-examples too.
+
+h2. Extending and callbacks
+
+p. The plugin comes with range of callback events, hooking points which 3rd party plugins/developers can use to integrate with mck_login inner-workings. This allows extending mck_login's feature set. For example adding anti-spam plugins, or extra form validation to the mix is no-brainer.
 
 * mck_login.reset_confirm
 * mck_login.reset_confirmed
@@ -22,3 +44,7 @@ p. The plugin comes with range of callback events, hooking point which 3rd party
 * mck_login.password_form
 * mck_login.save_password
 * mck_login.password_saved
+
+p. Hooking (registering callback) to the events happens with Textpattern's very own @register_callback()@ function, in the exact same fashion as one would normally do when writing a plugin for core Textpattern.
+
+p. See "/extending/abc_trap":https://github.com/gocom/mck_login/blob/master/extending/abc_trap.php for usage example. Abc_trap.php is an example plugin, that adds a hidden spam trap field to the registration form.
