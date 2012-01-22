@@ -4,12 +4,13 @@
  * Handles site-wide logins, sessions and self-registering
  *
  * @package mck_login
- * @author MarcoK
+ * @author Casalegno Marco <http://www.kreatore.it/>
  * @author Jukka Svahn <http://rahforum.biz>
  * @date 2012
  * @version 0.1
  * @license GNU GPLv2
- * @link https://github.com/gocom
+ * @link http://www.kreatore.it/txp/mck_login
+ * @link https://github.com/gocom/mck_login
  *
  * Requires Textpattern v4.4.1 (or newer) and PHP v5.2 (or newer)
  */
