@@ -914,6 +914,9 @@ class mck_login {
 		
 		if(isset($_POST[$name])) {
 			
+			if($type == 'checkbox' && ps($name) == $value)
+				$r['checked'] = 'checked';
+			
 			if($type != 'password' && $remember)
 				$r['value'] = ps($name);
 			
