@@ -22,7 +22,7 @@ p. As the work progressed, mck_login's tag weaponry doubled.
 * @<txp:mck_login_token />@
 * @<txp:mck_login_errors />@
 
-p. Please see "./examples/":https://github.com/gocom/mck_login/tree/master/examples directory for usage instructions and examples. The plugin's source includes documentation (PHPdoc) and outlines all tag attributes and has embedded minimal inline-examples too.
+p. Please see "./examples/":https://github.com/gocom/mck_login/tree/master/examples directory for usage instructions and examples. The "plugin's source (mck_login.php) includes":https://github.com/gocom/mck_login/blob/master/mck_login.php documentation (PHPdoc) and outlines all tag attributes and has embedded minimal inline-examples too.
 
 h2. Extending and callbacks
 
@@ -48,3 +48,16 @@ p. The plugin comes with range of callback events, hooking points which 3rd part
 p. Hooking (registering callback) to the events happens with Textpattern's very own @register_callback()@ function, in the exact same fashion as one would normally do when writing a plugin for core Textpattern.
 
 p. See "/extending/abc_trap":https://github.com/gocom/mck_login/blob/master/extending/abc_trap.php for usage example. Abc_trap.php is an example plugin, that adds a hidden spam trap field to the registration form.
+
+h2. Installing mck_login
+
+p. Installing the plugin is easy, especially if you are already usign "plugin cache directory":http://textpattern.net/wiki/index.php?title=Advanced_Preferences#Plugin_cache_directory_path. If you haven't, set it up (create a directory, set the path in your site Preferences). 
+
+# Grab a copy of "mck_login.php":https://github.com/gocom/mck_login/blob/master/mck_login.php.
+# Copy and save it to your plugin cache directory (as @mck_login_v0.1.php@).
+# The plugin is installed and activated.
+
+p. You may also want to grab a localization file, a textpack.
+
+# "Grab a localization file from textpacks directory":https://github.com/gocom/mck_login/tree/master/textpacks. There are few languages available.
+# Copy and paste the files contents to your site's Language paneö (TXP/Admin/Preferences > Language). At the bottom of the langauge panel you should see a _Install Textpack_ field.
