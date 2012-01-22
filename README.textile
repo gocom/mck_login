@@ -1,0 +1,24 @@
+h1. mck_login
+
+p. Handles site-wide logins, sessions, password recovery and self-registering.
+
+h2. Callbacks
+
+p. The plugin comes with range of callback events, hooking point which 3rd party plugins and software can use to integrate with mck_login inner-workings.
+
+* mck_login.reset_confirm
+* mck_login.reset_confirmed
+* mck_login.logout
+* mck_login.login
+* mck_login.invalid_login
+* mck_login.logged_in
+* mck_login.reset_form
+* mck_login.reset
+* mck_login.reset_sent
+* mck_login.register_form
+* mck_login.register
+* mck_login.registered
+* mck_login.login_form
+* mck_login.password_form
+* mck_login.save_password
+* mck_login.password_saved
