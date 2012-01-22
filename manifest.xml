@@ -1,0 +1,17 @@
+<manifest>
+
+	<name>mck_login</name>
+	<description>Handles site-wide logins, sessions and self-registering.</description>
+	
+	<version format="0.x">0.1</version>
+	<type public="0" pub-admin="1" library="2" admin-only="3">0</type>
+	
+	<author>Jukka Svahn</author>
+	<uri>http://rahforum.biz</uri>
+	
+	<order>5</order>
+	<flags>0</flags>
+	
+	<help format="textile" file="README.textile" />
+
+</manifest>
