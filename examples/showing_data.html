@@ -1,0 +1,29 @@
+
+<!--
+	Displays some data about logged in users if logged in,
+	otherwise a notification message.
+-->
+
+<txp:mck_login_if>
+
+	<ul>
+		<li><txp:mck_login name="RealName" /></li>
+		<li><txp:mck_login name="name" /></li>
+		<li><txp:mck_login name="email" /></li>
+	</ul>
+
+<txp:else />
+
+	<p>
+		Logged in is not this one, no. 
+		This one logged in must. With haste. We make happy must. 
+		He pleases us, he shall. He lost. We shall guide him.
+	</p>
+	
+	<p><a href="#">Log in here. Our master passage has. Passage indeed.</a></p>
+
+</txp:mck_login_if>
+
+<!--
+	@uses mck_login, mck_login_form, mck_login_errors, mck_login_input
+-->

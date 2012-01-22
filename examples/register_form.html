@@ -1,0 +1,36 @@
+<!--
+	Adds self-registering form. When form is completed correctly,
+	message is shown and user's auto-generated password is sent to
+	the provided email address.
+-->
+
+<txp:mck_register_form>
+
+	<txp:mck_login_errors />
+
+	<txp:mck_login_input 
+		type="text" 
+		name="mck_register_email" 
+		label="Your email address"
+	/><br />
+
+	<txp:mck_login_input 
+		type="text" 
+		name="mck_register_name" 
+		label="Your login name"
+	/><br />
+
+	<txp:mck_login_input 
+		type="text" 
+		name="mck_register_realname" 
+		label="Your real name"
+	/>
+
+	<p><button type="submit">Register</button></p>	
+<txp:else />
+	<p>Email sent to the provided email address with your account's login details.</p>
+</txp:mck_register_form>
+
+<!--
+	@uses mck_register_form, mck_login_input, mck_login_errors
+-->
