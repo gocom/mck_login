@@ -12,8 +12,10 @@
  * If the spam trap field is filled, registering is prevented.
  */
  
- 	register_callback('abc_trap_html', 'mck_login.register_form');
- 	register_callback('abc_trap_validate', 'mck_login.register');
+ 	if(@txpinterface == 'public') {
+ 		register_callback('abc_trap_html', 'mck_login.register_form');
+ 		register_callback('abc_trap_validate', 'mck_login.register');
+ 	}
 
 /**
  * Adds trap fields to the HTML form
