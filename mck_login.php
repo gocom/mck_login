@@ -13,11 +13,12 @@
  * Requires Textpattern v4.4.1 (or newer) and PHP v5.2 (or newer)
  */
 
-	if(@txpinterface == 'admin') {
-		register_callback(array('mck_login', 'uninstall'), 'plugin_lifecycle.mck_login', 'deleted');
-	}
-	else {
+	if(@txpinterface == 'public') {
 		register_callback(array('mck_login', 'handler'), 'textpattern');
+	}
+
+	elseif(@txpinterface == 'admin') {
+		register_callback(array('mck_login', 'uninstall'), 'plugin_lifecycle.mck_login', 'deleted');
 	}
 
 /**
