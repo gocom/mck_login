@@ -210,10 +210,10 @@ class mck_login {
 			Log in
 		*/
 		
-		self::$action = 'login';
-		
 		if(!$form || $is_logged_in || !strpos($form, ';'))
 			return;
+		
+		self::$action = 'login';
 		
 		callback_event('mck_login.login');
 		
@@ -286,8 +286,6 @@ class mck_login {
 
 	static public function send_reset($atts) {
 		
-		self::$action = 'reset';
-		
 		extract(doArray(array(
 			'name' => ps('mck_reset_name'),
 			'form' => ps('mck_reset_form'),
@@ -298,6 +296,8 @@ class mck_login {
 		if(!$form || !strpos($form, ';') || $is_logged_in) {
 			return false;
 		}
+		
+		self::$action = 'reset';
 		
 		callback_event('mck_login.reset');
 		
@@ -354,8 +354,6 @@ class mck_login {
 	 */
 
 	static public function add_user($atts) {
-		
-		self::$action = 'register';
 	
 		extract(doArray(array(
 			'email' => ps('mck_register_email'),
@@ -367,6 +365,8 @@ class mck_login {
 		if(!$form || !strpos($form, ';'))
 			return false;
 		
+		self::$action = 'register';
+
 		callback_event('mck_login.register');
 		
 		if(self::$form_errors)
@@ -482,8 +482,6 @@ class mck_login {
 
 	static public function save_password() {
 		
-		self::$action = 'password';
-		
 		extract(doArray(array(
 			'old_pass' => ps('mck_password_old'),
 			'new_pass' => ps('mck_password_new'),
@@ -494,6 +492,8 @@ class mck_login {
 		
 		if(!$form || mck_login(true) === false)
 			return false;
+		
+		self::$action = 'password';
 		
 		callback_event('mck_login.save_password');
 		
@@ -956,7 +956,7 @@ class mck_login {
 /**
  * Displays error messages
  * @param array|string $atts
- * @param string $atts[for] Sets which form's errors are shown. Either "login", "password" or "register".
+ * @param string $atts[for] Sets which form's errors are shown. Either login, reset, password, register.
  * @param string $atts[wraptag] HTML wraptag.
  * @param string $atts[break] HTML tag used to separate the items.
  * @param string $atts[class] Wraptag's HTML class.
@@ -964,7 +964,7 @@ class mck_login {
  * @param int $atts[limit] Limit number of shown errors.
  * @return string HTML markup
  * <code>
- *		<txp:mck_login_errors wraptag="p" break="" />
+ *		<txp:mck_login_errors for="reset" wraptag="p" break="" />
  * </code>
  */
 
