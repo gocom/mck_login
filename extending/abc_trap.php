@@ -5,6 +5,8 @@
  *
  * @package mck_login
  * @author Jukka Svahn
+ * @version 0.1
+ * @link https://github.com/gocom/mck_login
  *
  * The plugin will add a spam trap field to mck_login's self-registering form.
  * If the spam trap field is filled, registering is prevented.
@@ -15,7 +17,6 @@
 
 /**
  * Adds trap fields to the HTML form
- * @return string HTML markup
  * @see fInput(), ps()
  */
 
@@ -28,7 +29,6 @@
 
 /**
  * Add extra validation for the trap to the form processing step.
- * @return nothing
  * @see mck_login::error(), ps()
  */
 
