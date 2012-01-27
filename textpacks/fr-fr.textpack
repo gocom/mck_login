@@ -1,0 +1,23 @@
+#@public
+#@language fr-fr
+mck_login_name_and_pass_required => La saisie du nom et du mot de passe sont obligatoires.
+mck_login_form_expired => Le délai du formulaire a expiré. Veuillez soumettre de nouveau votre saisie en cliquant sur le bouton "Envoyer".
+mck_login_invalid_token => Soumission refusée en raison d'une erreur interne. Veuillez envoyer de nouveau ce formulaire.
+mck_login_invalid_login => La combinaison <b>utilisateur</b> et <b>mot de passe</b> est incorrecte.
+mck_login_ip_blacklisted => Soumission refusée. Votre adresse IP figure dans la liste noire anti-spam.
+mck_login_you_have_been_banned => Soumission refusée. Votre adresse IP a été bannie.
+mck_login_all_fields_required => La saisie de tous les champs est obligatoire.
+mck_login_email_too_long => Votre adresse Email est trop longue. Seules les adresses de 100 caractères maximum sont acceptées.
+mck_login_password_too_short => Le mot de passe doit comporter au moins 6 caractères.
+mck_login_username_too_short => Le nom utilisateur doit comporter au moins 3 caractères.
+mck_login_username_too_long => Le nom utilisateur ne doit pas excéder 64 caractères.
+mck_login_realname_too_long => Votre nom ne doit pas dépasser 100 caractères.
+mck_login_invalid_email => Cette adresse Email est invalide. Veuillez renseigner une adresse différente.
+mck_login_email_in_use => Cette adresse Email est actuellement utilisée pour un compte existant. Les adresses associée aux comptes doivent être uniques. Veuillez renseigner une adresse différente.
+mck_login_username_taken => Ce nom utilisateur est déjà utilisé. Les noms doivent être uniques.
+mck_login_saving_failed => La sauvegarde dans la base de données a échoué. Merci de recommencer le processus.
+mck_login_old_password_incorrect => L'ancien mot de passe est incorrect.
+mck_login_passwords_do_not_match => Le nouveau mot de passe et sa confirmation ne correspondent pas.
+mck_login_invalid_csrf_token => Accès refusé pour raisons de sécurité.
+mck_login_your_new_password => [{sitename}] Voici votre nouveau mot de passe
+mck_login_redirect_message => Si vous vous n'êtes pas redirigé, cliquez sur cette page : {url}
