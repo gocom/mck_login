@@ -1,0 +1,23 @@
+#@public
+#language it-it
+mck_login_name_and_pass_required => Nome e password sono necessari.
+mck_login_form_expired => Form scaduto. Prova a reinviare il form cliccando sul pulsante submit.
+mck_login_invalid_token => Richiesta negata per token non valido. Prova a inviare nuovamente il form.
+mck_login_invalid_login => Combinazione Utente/Password non corretta.
+mck_login_ip_blacklisted => Richiesta negata. Il tuo indirizzo IP  fa parte di una blacklist antispam.
+mck_login_you_have_been_banned => Richiesta negata. Il tuo indirizzo IP è stato bannato.
+mck_login_all_fields_required => Tutti i campi sono necessari.
+mck_login_email_too_long => Il tuo indirizzo email è troppo lungo. Sono validi solo indirizzi email lungi al massimo 100 caratteri.
+mck_login_password_too_short => La password deve essere lunga almeno 6 caratteri.
+mck_login_username_too_short => Lo Username deve essere di almeno 3 caratteri.
+mck_login_username_too_long => Lo Username non può essere lungo più di 64 caratteri.
+mck_login_realname_too_long => Il tuo nome non può essere più lungo di 100 caratteri.
+mck_login_invalid_email => Indirizzo email non valido. Inserisci un indirizzo differente.
+mck_login_email_in_use => Email già in uso da un'altro utente. Inserisci un indirizzo email differente.
+mck_login_username_taken => Username già in uso.
+mck_login_saving_failed => Salvataggio nel database fallito. Riprova.
+mck_login_old_password_incorrect => Vecchia password non corretta.
+mck_login_passwords_do_not_match => Le password non coincidono.
+mck_login_invalid_csrf_token => Accesso negato per ragioni di sicurezza: token non valido.
+mck_login_your_new_password => [{sitename}] la tua nuova password
+mck_login_redirect_message => Se il redirect non fuzniona, clicca sul seguente link: {url}
