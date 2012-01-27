@@ -19,11 +19,12 @@
 
 /**
  * Adds trap fields to the HTML form
+ * @return string HTML markup.
  * @see fInput(), ps()
  */
 
 	function abc_trap_html() {
-		echo 
+		return 
 			'<div style="display: none;">'.n.
 				fInput('text', 'phone', ps('phone')).n.
 			'</div>';
