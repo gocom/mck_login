@@ -43,7 +43,7 @@ class mck_login
             define('mck_login_admin_domain', '');
         }
 
-        register_callback(array($this, 'handler'), 'textpattern');
+        register_callback(array($this, 'logInHandler'), 'textpattern');
         register_callback(array($this, 'logOutHandler', 'textpattern');
         register_callback(array($this, 'confirmResetHandler'), 'textpattern');
     }
