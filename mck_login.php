@@ -17,10 +17,6 @@
         register_callback(array('mck_login', 'handler'), 'textpattern');
     }
 
-    elseif(@txpinterface == 'admin') {
-        register_callback(array('mck_login', 'uninstall'), 'plugin_lifecycle.mck_login', 'deleted');
-    }
-
 /**
  * Handles form validation and saving, all of the non-tag stuff
  */
@@ -29,16 +25,6 @@ class mck_login {
 
     static public $form_errors = array();
     static public $action;
-
-    /**
-     * Uninstalls the plugin
-     * @return nothing
-     * @access private
-     */
-
-    static public function uninstall() {
-        safe_delete('txp_lang', "name LIKE 'mck\_login\_'");
-    }
     
     /**
      * Add and get form validation errors
