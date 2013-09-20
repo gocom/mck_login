@@ -1,0 +1,11 @@
+{
+    "name": "mck_login",
+    "description": "Handles site-wide logins, sessions and self-registering.",
+    "version": "0.0.0",
+    "type": 0,
+    "author": "",
+    "author_uri": "",
+    "order": 5,
+    "flags": 0,
+    "help": {"file": ["./README.textile"]}
+}
