@@ -13,17 +13,41 @@
  * Requires Textpattern v4.4.1 (or newer) and PHP v5.2 (or newer)
  */
 
-    register_callback(array('mck_login', 'handler'), 'textpattern');
-
 /**
  * Handles form validation and saving, all of the non-tag stuff
  */
 
-class mck_login {
-
+class mck_login
+{
     static public $form_errors = array();
     static public $action;
-    
+
+    /**
+     * Constructor.
+     */
+
+    public function __construct()
+    {
+        if (!defined('mck_login_pub_path'))
+        {
+            define('mck_login_pub_path', preg_replace('|//$|','/', rhu.'/'));
+        }
+
+        if (!defined('mck_login_admin_path'))
+        {
+            define('mck_login_admin_path', '/textpattern/');
+        }
+
+        if (!defined('mck_login_admin_domain'))
+        {
+            define('mck_login_admin_domain', '');
+        }
+
+        register_callback(array($this, 'handler'), 'textpattern');
+        register_callback(array($this, 'logOutHandler', 'textpattern');
+        register_callback(array($this, 'confirmResetHandler'), 'textpattern');
+    }
+
     /**
      * Add and get form validation errors
      * @param string $message Either l10n string, or single line of text
@@ -49,45 +73,110 @@ class mck_login {
     }
 
     /**
-     * Validates login details and handles sessions
-     * @return nothing
-     * @see txp_validate(), generate_password(), $sitename
-     * @access private
+     * Log out handler.
      */
 
-    static public function handler() {
+    public function logOutHandler()
+    {
+        if ($logout = gps('mck_logout') && $user = is_logged_in() && self::$action = 'logout')
+        {
+            callback_event('mck_login.logout');
 
-        global $sitename;
-    
+            safe_update(
+                'txp_users',
+                "nonce = '".doSlash(md5(uniqid(mt_rand(), true)))."'",
+                "name = '".doSlash($user['name'])."'"
+            );
+
+            setcookie('txp_login_public', '', time() - 3600, mck_login_pub_path);
+            setcookie('txp_login', '', time() - 3600, mck_login_admin_path, mck_login_admin_domain);
+            unset($_COOKIE['txp_login_public']);
+        }
+    }
+
+    /**
+     * Log in handler.
+     */
+
+    public function logInHandler()
+    {
         extract(doArray(array(
             'name' => ps('mck_login_name'),
             'pass' => ps('mck_login_pass'),
             'stay' => ps('mck_login_stay'),
             'form' => ps('mck_login_form'),
-            'reset' => ps('mck_reset'),
-            'logout' => gps('mck_logout'),
         ), 'trim'));
-        
-        if(!$form && !$reset && !$logout)
-            return;
-        
-        $is_logged_in = is_logged_in();
-        
-        if(!defined('mck_login_pub_path'))
-            define('mck_login_pub_path', preg_replace('|//$|','/', rhu.'/'));
-        
-        if(!defined('mck_login_admin_path'))
-            define('mck_login_admin_path', '/textpattern/');
-        
-        if(!defined('mck_login_admin_domain'))
-            define('mck_login_admin_domain', '');
-        
-        /*
-            Confirm password reset request
-        */
-        
-        if($reset && !$form && !$is_logged_in) {
+
+        if ($form && !is_logged_in() && strpos($form, ';') && self::$action = 'login')
+        {
+            callback_event('mck_login.login');
+
+            if (!$pass || !$name)
+            {
+                self::error('name_and_pass_required');
+                return;
+            }
+
+            $form = explode(';', (string) $form);
+
+            if ($form[1] != md5($form[0] . get_pref('blog_uid')))
+            {
+                self::error('invalid_token');
+                return;
+            }
+
+            if ((int) $form[0] < @strtotime('-30 minutes'))
+            {
+                self::error('form_expired');
+                return;
+            }
+
+            include_once txpath . '/include/txp_auth.php';
             
+            if (txp_validate($name, $pass, false) === false)
+            {
+                callback_event('mck_login.invalid_login');
+                self::error('invalid_login');
+                sleep(3);
+                return;
+            }
+
+            $c_hash = md5(uniqid(mt_rand(), true));
+            $nonce = md5($name.pack('H*', $c_hash));
+            $value = substr(md5($nonce), -10).$name;
+            $privs = fetch('privs', 'txp_users', 'name', $name);
+
+            safe_update(
+                'txp_users',
+                "nonce = '".doSlash($nonce)."', last_access = now()",
+                "name='".doSlash($name)."'"
+            );
+
+            setcookie(
+                'txp_login_public',
+                $value,
+                $stay ? time()+3600*24*30 : 0,
+                mck_login_pub_path
+            );
+
+            if ($privs > 0)
+            {
+                setcookie('txp_login', $name.','.$c_hash, $stay ? time() + 3600*24*365 : 0, mck_login_admin_path, mck_login_admin_domain);
+            }
+
+            $_COOKIE['txp_login_public'] = $value;
+            callback_event('mck_login.logged_in');
+        }
+    }
+
+    /**
+     * Reset password.
+     */
+
+    public function confirmResetHandler()
+    {
+        if ($reset = ps('mck_reset') && !is_logged_in())
+        {
             self::$action = 'reset';
             
             callback_event('mck_login.reset_confirm');
@@ -97,7 +186,8 @@ class mck_login {
             $confirm = pack('H*', $reset);
             $reset = substr($confirm, 5);
             
-            if(!strpos($reset, ';')) {
+            if (!strpos($reset, ';'))
+            {
                 self::error('invalid_token');
                 return;
             }
@@ -115,26 +205,28 @@ class mck_login {
             
             $packed = pack('H*', substr(md5($r['nonce'] . $redirect), 0, 10)) . $name . ';' . $redirect;
             
-            if(!$r || !$r['nonce'] || $confirm !== $packed) {
+            if (!$r || !$r['nonce'] || $confirm !== $packed)
+            {
                 sleep(3);
                 self::error('invalid_token');
                 return;
             }
-            
+
             include_once txpath . '/lib/txplib_admin.php';
             include_once txpath . '/include/txp_auth.php';
-            
+
             $pass = generate_password(12);
             $hash = txp_hash_password($pass);
             
-            if(
+            if (
                 safe_update(
                     'txp_users',
                     "pass='".doSlash($hash)."',
                     nonce='".doSlash(md5($name.pack('H*', md5(uniqid(mt_rand(), true)))))."'",
                     "name='".doSlash($name)."'"
                 ) === false
-            ) {
+            )
+            {
                 
                 self::error('saving_failed');
                 return;
@@ -147,119 +239,22 @@ class mck_login {
             
             $subject = 
                 gTxt('mck_login_your_new_password', 
-                    array('{sitename}' => $sitename)
+                    array('{sitename}' => get_pref('sitename'))
                 );
             
-            if(txpMail($r['email'], $subject, $message) === false) {
+            if (txpMail($r['email'], $subject, $message) === false)
+            {
                 self::error('could_not_mail');
                 return;
             }
-            
+
             callback_event('mck_login.reset_confirmed');
-            
+
             header('Location: ' .hu.$redirect);
-            
-            $msg = 
-                gTxt('mck_login_redirect_message', 
-                    array('{url}' => htmlspecialchars(hu.$redirect))
-                );
-            
+
+            $msg = gTxt('mck_login_redirect_message', array('{url}' => htmlspecialchars(hu.$redirect)));
             die($msg);
-            return;
         }
-        
-        /*
-            Log out
-        */
-    
-        if($logout && !$form && $is_logged_in) {
-            
-            self::$action = 'logout';
-            
-            callback_event('mck_login.logout');
-            
-            safe_update(
-                'txp_users',
-                "nonce='".doSlash(md5(uniqid(mt_rand(), TRUE)))."'",
-                "name='".doSlash($is_logged_in['name'])."'"
-            );
-            
-            setcookie('txp_login_public', '', time()-3600, mck_login_pub_path);
-            setcookie('txp_login', '', time()-3600, mck_login_admin_path, mck_login_admin_domain);
-            
-            $_COOKIE['txp_login_public'] = '';
-            return;
-        }
-        
-        /*
-            Log in
-        */
-        
-        if(!$form || $is_logged_in || !strpos($form, ';'))
-            return;
-        
-        self::$action = 'login';
-        
-        callback_event('mck_login.login');
-        
-        if(!$pass || !$name) {
-            self::error('name_and_pass_required');
-            return;
-        }
-        
-        $form = explode(';', (string) $form);
-        
-        if($form[1] != md5($form[0] . get_pref('blog_uid'))) {
-            self::error('invalid_token');
-            return;
-        }
-        
-        if((int) $form[0] < @strtotime('-30 minutes')) {
-            self::error('form_expired');
-            return;
-        }
-            
-        include_once txpath . '/include/txp_auth.php';
-            
-        if(txp_validate($name, $pass, false) === false) {
-            callback_event('mck_login.invalid_login');
-            self::error('invalid_login');
-            sleep(3);
-            return;
-        }
-        
-        $c_hash = md5(uniqid(mt_rand(), true));
-        $nonce = md5($name.pack('H*', $c_hash));
-        $value = substr(md5($nonce), -10).$name;
-        $privs = fetch('privs', 'txp_users', 'name', $name);
-        
-        safe_update(
-            'txp_users',
-            "nonce='".doSlash($nonce)."',
-            last_access=now()",
-            "name='".doSlash($name)."'"
-        );
-        
-        setcookie(
-            'txp_login_public',
-            $value,
-            $stay ? time()+3600*24*30 : 0,
-            mck_login_pub_path
-        );
-        
-        if($privs > 0) {
-            setcookie(
-                'txp_login',
-                $name.','.$c_hash,
-                $stay ? time()+3600*24*365 : 0,
-                mck_login_admin_path,
-                mck_login_admin_domain
-            );
-        }
-        
-        $_COOKIE['txp_login_public'] = $value;
-        
-        callback_event('mck_login.logged_in');
     }
 
     /**
@@ -551,6 +546,8 @@ class mck_login {
         return mb_strlen($str, 'UTF-8');
     }
 }
+
+new mck_login();
 
 /**
  * Password reset form
