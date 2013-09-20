@@ -13,9 +13,7 @@
  * Requires Textpattern v4.4.1 (or newer) and PHP v5.2 (or newer)
  */
 
-    if(@txpinterface == 'public') {
-        register_callback(array('mck_login', 'handler'), 'textpattern');
-    }
+    register_callback(array('mck_login', 'handler'), 'textpattern');
 
 /**
  * Handles form validation and saving, all of the non-tag stuff
