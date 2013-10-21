@@ -44,7 +44,7 @@ class mck_login
         }
 
         register_callback(array($this, 'logInHandler'), 'textpattern');
-        register_callback(array($this, 'logOutHandler', 'textpattern');
+        register_callback(array($this, 'logOutHandler'), 'textpattern');
         register_callback(array($this, 'confirmResetHandler'), 'textpattern');
     }
 
