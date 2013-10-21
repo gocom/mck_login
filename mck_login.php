@@ -810,128 +810,153 @@ new mck_login();
     }
 
 /**
- * Displays password changing form
- * @param array $atts
- * @param string $atts[action] Form's action (target location).
- * @param string $atts[id] Form's HTML id.
- * @param string $atts[class] Form's HTML class.
- * @param string $thing
+ * Displays password changing form.
+ *
+ * @param  array  $atts
+ * @param  string $atts[action] Form's action (target location)
+ * @param  string $atts[id]     Form's HTML id
+ * @param  string $atts[class]  Form's HTML class
+ * @param  string $thing
  * @return string HTML markup
- * <code>
- *        <txp:mck_password_form>
- *            <txp:mck_login_errors />
- *            <txp:mck_login_input type="password" name="mck_password_old" />
- *            <txp:mck_login_input type="password" name="mck_password_new" />
- *            <txp:mck_login_input type="password" name="mck_password_confirm" />
- *            <button type="submit">Save new password</button>
- *        <txp:else />
- *            Password changed.
- *        </txp:mck_password_form>
- * </code>
+ * @example
+ * &lt;txp:mck_password_form&gt;
+ *     &lt;txp:mck_login_errors /&gt;
+ *     &lt;txp:mck_login_input type="password" name="mck_password_old" /&gt;
+ *     &lt;txp:mck_login_input type="password" name="mck_password_new" /&gt;
+ *     &lt;txp:mck_login_input type="password" name="mck_password_confirm" /&gt;
+ *     &lt;button type="submit"&gt;Save new password&lt;/button&gt;
+ * &lt;txp:else /&gt;
+ *     Password changed.
+ * &lt;/txp:mck_password_form&gt;
  */
 
-    function mck_password_form($atts, $thing='') {
-    
+    function mck_password_form($atts, $thing = '')
+    {
         global $pretext;
-        
+
         extract(lAtts(array(
             'action' => $pretext['request_uri'].'#mck_password_form',
-            'id'=> 'mck_password_form',
-            'class' => 'mck_password_form',
+            'id'     => 'mck_password_form',
+            'class'  => 'mck_password_form',
         ), $atts));
-        
-        if(mck_login(true) === false)
-            return;
-        
-        $r = mck_login::save_password();
-        
-        if($r === true && !mck_login::error())
-            return parse(EvalElse($thing, false));
-        
-        if(mck_login::error())
-            $class .= 'mck_login_error';
-        
-        mck_login_errors('password');
-        
-        $thing = 
-            '<form method="post" id="'.htmlspecialchars($id).'" class="'.htmlspecialchars($class).'" action="'.htmlspecialchars($action).'">'.n.
-                hInput('mck_login_token', mck_login_token()).n.
-                hInput('mck_password_form', 1).n.
-                parse(EvalElse($thing, true)).n.
-                callback_event('mck_login.password_form').
-            '</form>';
-        
-        mck_login_errors(null);
 
+        if (mck_login(true) === false)
+        {
+            return;
+        }
+
+        $r = mck_login::save_password();
+
+        if ($r === true && !mck_login::error())
+        {
+            return parse(EvalElse($thing, false));
+        }
+
+        if (mck_login::error())
+        {
+            $class .= 'mck_login_error';
+        }
+
+        mck_login_errors('password');
+
+        $thing = tag_start('form', array(
+            'method' => 'post',
+            'action' => $action,
+            'id'     => $id,
+            'class'  => $class,
+        )).
+        hInput('mck_login_token', mck_login_token()).
+        hInput('mck_password_form', 1).
+        parse(EvalElse($thing, true)).
+        callback_event('mck_login.password_form').
+        tag_end('form');
+
+        mck_login_errors(null);
         return $thing;
     }
 
 /**
- * Generates HTML form inputs
- * @param array $atts Array of HTML input's attributes. i.e. array('type' => 'password', ...)
+ * Renders a HTML form input.
+ *
+ * @param  array  $atts Attributes
  * @return string HTML markup
- * <code>
- *        <txp:mck_login_input type="text" name="foo" value="bar" />
- * </code>
+ * @example
+ * &lt;txp:mck_login_input type="text" name="foo" value="bar" /&gt;
  */
 
-    function mck_login_input($atts) {
-    
+    function mck_login_input($atts)
+    {
         static $uid = 1;
-        
+
         $r = lAtts(array(
-            'type' => 'text',
-            'name' => '',
-            'value' => '',
-            'class' => 'mck_login_input',
-            'id' => '',
-            'label' => '',
+            'type'     => 'text',
+            'name'     => '',
+            'value'    => '',
+            'class'    => 'mck_login_input',
+            'id'       => '',
+            'label'    => '',
             'required' => 1,
             'remember' => 1,
-        ), $atts, 0);
-        
+        ), $atts, false);
+
         extract($r);
-        
-        if($type == 'token') {
+
+        if ($type == 'token')
+        {
             return hInput('mck_login_token', mck_login_token());
         }
-        
-        if($required) {
+
+        if ($required)
+        {
             $r['class'] .= ' mck_login_required';
         }
-        
-        if(isset($_POST[$name])) {
-            
-            if($type == 'checkbox' && ps($name) == $value)
+
+        if (isset($_POST[$name]))
+        {
+            if ($type == 'checkbox' && ps($name) == $value)
+            {
                 $r['checked'] = 'checked';
-            
-            if($type != 'password' && $remember)
+            }
+
+            if ($type != 'password' && $remember)
+            {
                 $r['value'] = ps($name);
-            
-            if(ps($name) === '' && $required) {
+            }
+
+            if (ps($name) === '' && $required)
+            {
                 $r['class'] .= ' mck_login_error';
             }
         }
-        
-        if(!$id && $uid++)
+
+        if (!$id && $uid++)
+        {
             $r['id'] = 'mck_login_' . md5($name . $uid);
-        
-        if($label)
-            $label = '<label for="'.htmlspecialchars($r['id']).'">'.
-                htmlspecialchars($r['label']).'</label>'.n;
-        
+        }
+
+        if ($label)
+        {
+            $label = '<label for="'.txpspecialchars($r['id']).'">'.txpspecialchars($r['label']).'</label>'.n;
+        }
+
         $r = array_merge((array) $atts, (array) $r);
         unset($r['label']);
-        
-        if($required != 'required')
+
+        if ($required != 'required')
+        {
             unset($r['required']);
-        
+        }
+
         $out = array();
-        
-        foreach($r as $name => $value)
-            if($value !== '' || $name == 'value')
-                $out[] = htmlspecialchars($name).'="'.htmlspecialchars($value).'"';
-        
+
+        foreach ($r as $name => $value)
+        {
+            if ($value !== '' || $name === 'value')
+            {
+                $out[] = txpspecialchars($name).'="'.txpspecialchars($value).'"';
+            }
+        }
+
         return $label . '<input '. implode(' ', $out).' />';
     }
 
@@ -1041,5 +1066,3 @@ new mck_login();
         if($thing !== NULL && !$void)
             return parse($thing);
     }
-
-?>
