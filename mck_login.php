@@ -649,40 +649,43 @@ new mck_login();
     }
 
 /**
- * Check if the user is logged in, or that the data matches the value
- * @param array $atts
- * @param string $atts[name] If NULL (unset), checks if visitor is logged in.
- * @param string $atts[value] Match to.
- * @param string $thing
+ * Check if the user is logged in, or that the specified value matches.
+ *
+ * If used as a self-closing single tag, will display 401 error page
+ * on failure.
+ *
+ * @param  array  $atts
+ * @param  string $atts[name]  If NULL, checks if visitor is logged in.
+ * @param  string $atts[value] Match to.
+ * @param  string $thing
  * @return string
- * @see mck_login()
- * <code>
- *        <txp:mck_login_if>
- *            User is logged in.
- *        <txp:else />
- *            User is not logged in.
- *        </txp:mck_login_if>
- * </code>
+ * @see    mck_login()
+ * @example
+ * &lt;txp:mck_login_if&gt;
+ *     User is logged in.
+ * &lt;txp:else /&gt;
+ *     User is not logged in.
+ * &lt;/txp:mck_login_if&gt;
  */
 
-    function mck_login_if($atts, $thing) {
-    
+    function mck_login_if($atts, $thing = null)
+    {
         extract(lAtts(array(
-            'name' => NULL,
+            'name'  => null,
             'value' => '',
-        ),$atts));
-        
-        $data = mck_login(true);
+        ), $atts));
 
-        if($name === NULL) {
-            $r = $data !== false;
+        $r = ($data = mck_login(true)) !== false && ($name === null || isset($data[$name]) && $data[$name] === $value);
+
+        if ($thing !== null)
+        {
+            return parse(EvalElse($thing, $r));
         }
-        
-        else {
-            $r = isset($data[$name]) && $data[$name] == $value;
+
+        if ($r === false)
+        {
+            txp_die(gTxt('auth_required'), 401);
         }
-        
-        return parse(EvalElse($thing, $r));
     }
 
 /**
